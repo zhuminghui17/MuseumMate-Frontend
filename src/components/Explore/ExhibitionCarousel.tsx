@@ -22,9 +22,10 @@ type PropType = {
 };
 
 const ExhibitionCarousel: React.FC<PropType> = ({ exhibitions, options }) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, [
-    Autoplay({ playOnInit: true, delay: 5000 }), // Autoplay every 5 seconds
-  ]);
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, ...options }, // Enable looping
+    [Autoplay({ playOnInit: true, delay: 5000 })] // Autoplay every 5 seconds
+  );
   const [isPlaying, setIsPlaying] = useState(false);
 
   const {
@@ -54,13 +55,24 @@ const ExhibitionCarousel: React.FC<PropType> = ({ exhibitions, options }) => {
   }, [emblaApi]);
 
   return (
-    <Box sx={{ position: "relative" }}>
-      <Box className="embla" sx={{ overflow: "hidden" }} ref={emblaRef}>
+    <Box sx={{ position: "relative", paddingX: "20px" }}>
+      <Box
+        className="embla"
+        sx={{
+          overflow: "hidden",
+          paddingLeft: "20px", // Add space on the left
+          paddingRight: "10px", // Add space on the right
+        }}
+        ref={emblaRef}
+      >
         <Box
           className="embla__container"
           sx={{
             display: "flex",
-            gap: "10px",
+            gap: "20px", // Add spacing between slides
+            paddingLeft: "20px", // Ensure space before the first slide
+            paddingRight: "20px", // Ensure space after the last slide
+            marginBottom: 2,
           }}
         >
           {exhibitions.map((exhibition) => (
@@ -68,7 +80,7 @@ const ExhibitionCarousel: React.FC<PropType> = ({ exhibitions, options }) => {
               key={exhibition.exhibitionId}
               className="embla__slide"
               sx={{
-                flex: "0 0 70%",
+                flex: "0 0 80%",
                 position: "relative",
                 borderRadius: "8px",
                 overflow: "hidden",
@@ -85,20 +97,20 @@ const ExhibitionCarousel: React.FC<PropType> = ({ exhibitions, options }) => {
                   objectFit: "cover",
                 }}
               />
-              <Box sx={{ padding: 2 }}>
+              <Box sx={{ padding: 1 }}>
                 <Typography
                   variant="body1"
                   sx={{ fontWeight: "bold", marginBottom: 1 }}
                 >
                   {exhibition.name}
                 </Typography>
-                <Typography
+                {/* <Typography
                   variant="body2"
                   color="text.secondary"
                   sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
                 >
                   {exhibition.description}
-                </Typography>
+                </Typography> */}
               </Box>
             </Box>
           ))}
@@ -106,16 +118,13 @@ const ExhibitionCarousel: React.FC<PropType> = ({ exhibitions, options }) => {
       </Box>
 
       {/* Carousel Controls */}
-      <Box className="embla__controls" sx={{ marginTop: 2, display: "flex", justifyContent: "center" }}>
-        <PrevButton
-          onClick={onPrevButtonClick}
-          disabled={prevBtnDisabled}
-        />
-        <NextButton
-          onClick={onNextButtonClick}
-          disabled={nextBtnDisabled}
-        />
-        <button
+      <Box
+        className="embla__controls"
+        sx={{ marginTop: 2, display: "flex", justifyContent: "center" }}
+      >
+        <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
+        <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+        {/* <button
           onClick={toggleAutoplay}
           type="button"
           style={{
@@ -126,7 +135,7 @@ const ExhibitionCarousel: React.FC<PropType> = ({ exhibitions, options }) => {
           }}
         >
           {isPlaying ? "Stop" : "Play"}
-        </button>
+        </button> */}
       </Box>
     </Box>
   );

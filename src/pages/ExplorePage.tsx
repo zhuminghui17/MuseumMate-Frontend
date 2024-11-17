@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, Typography, MenuItem, Select } from "@mui/material";
-import ExhibitionCarousel from "../components/Explore/ExhibitionCarousel";
-import ExhibitionSection from "../components/Explore/ExhibitionSection";
+import { Box, Typography, MenuItem, Select} from "@mui/material";
+import ExhibitionCarousel from "../components/explore/ExhibitionCarousel";
+import ExhibitionSection from "../components/explore/ExhibitionSection";
 import mockExhibitions from "../data/MockExhibition";
 
 const ExplorePage: React.FC = () => {
@@ -27,27 +27,38 @@ const ExplorePage: React.FC = () => {
                 </Box>
             </Box>
 
-            {/* Featured Carousel */}
-            <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: 2, textAlign: "left" }}>
-                Picks for You!
-            </Typography>
-
-            {/* Centered Carousel */}
             <Box
                 sx={{
-                    marginBottom: 4,
-                    width: "50%", // Set width to 50% of the parent container
-                    marginX: "auto", // Horizontally center the box
+                    paddingX: 2, // Left and right padding (equivalent to 32px)
+                    marginX: "auto", // Center the content horizontally if needed
+                    maxWidth: "1200px", // Optional: Restrict the max width for better layout
                 }}
             >
-                <ExhibitionCarousel exhibitions={featured} />
+                {/* Featured Carousel */}
+                <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: 2, textAlign: "left" }}>
+                    Picks for You!
+                </Typography>
+
+                {/* Centered Carousel */}
+                <Box
+                    sx={{
+                        marginBottom: 4,
+                        width: "50%", // Set width to 50% of the parent container
+                        marginX: "auto", // Horizontally center the box
+                    }}
+                >
+                    <ExhibitionCarousel exhibitions={featured} />
+                </Box>
+
+                {/* Popular Exhibitions */}
+                <ExhibitionSection title="Popular Exhibitions" items={popular} />
+
+                {/* Ending Soon */}
+                <ExhibitionSection title="Ending Soon" items={popular} />
+
             </Box>
 
-            {/* Popular Exhibitions */}
-            <ExhibitionSection title="Popular Exhibitions" items={popular} />
 
-            {/* Ending Soon */}
-            <ExhibitionSection title="Ending Soon" items={popular} />
         </Box>
     );
 };

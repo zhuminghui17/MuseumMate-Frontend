@@ -2,27 +2,41 @@ import React from "react";
 import { Box, Grid, Typography, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Museum from "../models/Museum";
-import MuseumDetails from "../components/Museum/MuseumDetails";
-import CollectionHighlights from "../components/Museum/CollectionHighlights";
-import ReviewsSection from "../components/Museum/ReviewsSection";
-import SimilarMuseums from "../components/Museum/SimilarMuseums";
+import MuseumDetails from "../components/museum/MuseumDetails";
+import CollectionHighlights from "../components/museum/CollectionHighlights";
+import ReviewsSection from "../components/museum/ReviewsSection";
+import SimilarMuseums from "../components/museum/SimilarMuseums";
+import { useNavigate } from "react-router-dom";
 
 interface MuseumPageProps {
     museum: Museum;
 }
 
 const MuseumPage: React.FC<MuseumPageProps> = ({ museum }) => {
+    const navigate = useNavigate(); // Initialize the navigate hook
+
+    const handleBackClick = () => {
+        navigate(-1); // Navigate to the previous page
+    };
     return (
         <Box sx={{ padding: "20px 40px" }}>
             {/* Back Button and Header */}
             <Box sx={{ display: "flex", alignItems: "center", marginBottom: 3 }}>
-                <IconButton>
+            <IconButton onClick={handleBackClick}>
                     <ArrowBackIcon />
                 </IconButton>
                 <Typography variant="h4" sx={{ marginLeft: 2, fontWeight: "bold" }}>
                     {museum.name}
                 </Typography>
             </Box>
+
+            <Box
+                sx={{
+                    paddingX: 2, // Left and right padding (equivalent to 32px)
+                    marginX: "auto", // Center the content horizontally if needed
+                    maxWidth: "95%", // Optional: Restrict the max width for better layout
+                }}
+            >
 
             {/* Main Content */}
             <Grid container spacing={6}>
@@ -60,6 +74,8 @@ const MuseumPage: React.FC<MuseumPageProps> = ({ museum }) => {
             {/* Similar Themed Museums */}
             <Box sx={{ marginTop: 6 }}>
                 <SimilarMuseums images={museum.images} />
+            </Box>
+
             </Box>
         </Box>
     );

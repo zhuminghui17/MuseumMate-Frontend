@@ -3,18 +3,32 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
+import { useNavigate } from 'react-router-dom';
+import { ScreenPath } from '../../navigation';
 
 const Header: React.FC = () => {
+    const navigate = useNavigate();
+    const currentPath = window.location.pathname;
+    
     return (
-        <AppBar position="static" color="transparent" elevation={0} sx={{ padding: '10px' }}>
+        <AppBar position="static" color="transparent" elevation={0} sx={{ padding: '5px' }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 {/* Logo - 20% */}
-                <Box sx={{ flex: '1 1 0%' }}>
-                    <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'black' }}>
+                <Box
+                    sx={{ flex: '1 1 0%', cursor: 'pointer' }}
+                    onClick={() => navigate(ScreenPath.HOME)} // Navigate to Home Screen
+                >
+                    <Typography
+                        variant="h5"
+                        sx={{
+                            fontWeight: 'bold',
+                            color: 'black',
+                            userSelect: 'none', // Disable text selection
+                        }}
+                    >
                         MuseumMate
                     </Typography>
                 </Box>
@@ -22,41 +36,48 @@ const Header: React.FC = () => {
                 {/* Navigation - 40% */}
                 <Box sx={{ flex: '1 1 40%', display: 'flex', justifyContent: 'center', gap: 3 }}>
                     <Button
+                        onClick={() => navigate(ScreenPath.EXPLORE)}
                         color="inherit"
                         sx={{
                             color: 'black',
-                            textDecoration: 'underline',
-                            fontSize: '1.1rem', // Adjust font size
+                            textDecoration: currentPath === ScreenPath.EXPLORE ? 'underline' : 'none',
+                            fontSize: '1.1rem',
                             fontWeight: 'bold',
                         }}
                     >
                         Explore
                     </Button>
                     <Button
+                        onClick={() => navigate(ScreenPath.SAVED)}
                         color="inherit"
                         sx={{
                             color: 'black',
-                            fontSize: '1.1rem', // Adjust font size
+                            textDecoration: currentPath === ScreenPath.SAVED ? 'underline' : 'none',
+                            fontSize: '1.1rem',
                             fontWeight: 'bold',
                         }}
                     >
                         Saved
                     </Button>
                     <Button
+                        onClick={() => navigate(ScreenPath.VISITS)}
                         color="inherit"
                         sx={{
                             color: 'black',
-                            fontSize: '1.1rem', // Adjust font size
+                            textDecoration: currentPath === ScreenPath.VISITS ? 'underline' : 'none',
+                            fontSize: '1.1rem',
                             fontWeight: 'bold',
                         }}
                     >
                         My Visits
                     </Button>
                     <Button
+                        onClick={() => navigate(ScreenPath.ACCOUNT)}
                         color="inherit"
                         sx={{
                             color: 'black',
-                            fontSize: '1.1rem', // Adjust font size
+                            textDecoration: currentPath === ScreenPath.ACCOUNT ? 'underline' : 'none',
+                            fontSize: '1.1rem',
                             fontWeight: 'bold',
                         }}
                     >
@@ -85,3 +106,4 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+
